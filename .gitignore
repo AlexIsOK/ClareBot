@@ -1,0 +1,21 @@
+
+# node modules
+node_modules
+
+# auth stuff
+secrets.json
+
+# tmp directory for storing images to send
+tmp/
+
+# this is almost as annoying as eclipse i swear
+# ignore webstorm stuffs
+.idea
+*.iml
+
+# ignore all images types in case one escapes into the
+# project directory
+*.png
+*.gif
+*.jpg
+*.jpeg

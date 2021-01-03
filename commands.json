@@ -1,0 +1,87 @@
+[
+  {
+    "name": "ping",
+    "description": "annoys the bot",
+    "endpoint": null
+  },
+  {
+    "name": "avatar",
+    "description": "Get a cute anime avatar",
+    "endpoint": "images/avatars"
+  },
+  {
+    "name": "blush",
+    "description": "Blush gifs or images",
+    "endpoint": "images/blush"
+  },
+  {
+    "name": "hug",
+    "description": "Hug gifs or images",
+    "endpoint": "images/hug"
+  },
+  {
+    "name": "kiss",
+    "description": "Kiss gifs or images",
+    "endpoint": "images/kiss"
+  },
+  {
+    "name": "neko",
+    "description": "Do you really need an explanation of this command?",
+    "endpoint": "images/neko"
+  },
+  {
+    "name": "nom",
+    "description": "om nom nom",
+    "endpoint": "images/nom"
+  },
+  {
+    "name": "pat",
+    "description": "pat pet pot pat pet pot pet pot pat pat pet pot?",
+    "endpoint": "images/pat"
+  },
+  {
+    "name": "pout",
+    "description": "Pout gifs or images",
+    "endpoint": "images/pout"
+  },
+  {
+    "name": "slap",
+    "description": "Wa-pow!",
+    "endpoint": "images/slap"
+  },
+  {
+    "name": "smug",
+    "description": "Smug gifs or images",
+    "endpoint": "images/smug"
+  },
+  {
+    "name": "wallpaper",
+    "description": "Anime wallpapers",
+    "endpoint": "images/wallpapers"
+  },
+
+  {
+    "name": "bondage",
+    "description": "uhm........ (all characters are 18+)",
+    "endpoint": "images/nsfw/bondage",
+    "nsfw": true
+  },
+  {
+    "name": "hentai",
+    "description": "Hentai gifs or images (all characters are 18+)",
+    "endpoint": "images/nsfw/hentai",
+    "nsfw": true
+  },
+  {
+    "name": "thighs",
+    "description": "T H I G H S (all characters are 18+)",
+    "endpoint": "images/nsfw/thighs",
+    "nsfw": true
+  },
+
+  {
+    "name": "credits",
+    "description": "Get the credits for the bot and API",
+    "endpoint": null
+  }
+]
