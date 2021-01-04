@@ -7,57 +7,96 @@
   {
     "name": "avatar",
     "description": "Get a cute anime avatar",
-    "endpoint": "images/avatars"
+    "endpoint": "images/avatars",
+    "titleA": "Here is your avatar"
   },
   {
     "name": "blush",
     "description": "Blush gifs or images",
-    "endpoint": "images/blush"
+    "endpoint": "images/blush",
+    "titleA": "Here is the blush image"
   },
   {
     "name": "hug",
     "description": "Hug gifs or images",
-    "endpoint": "images/hug"
+    "endpoint": "images/hug",
+    "titleA": "Hugsss",
+    "titleB": "%AUTHOR; hugs %MENTIONED;",
+    "options": [{
+      "name": "user",
+      "description": "The user to hug",
+      "type": 6,
+      "required": false
+    }]
   },
   {
     "name": "kiss",
     "description": "Kiss gifs or images",
-    "endpoint": "images/kiss"
+    "endpoint": "images/kiss",
+    "titleA": "Here is the kiss image",
+    "titleB": "%AUTHOR; kisses %MENTIONED; <3",
+    "options": [{
+      "name": "user",
+      "description": "The user to kiss",
+      "type": 6,
+      "required": false
+    }]
   },
   {
     "name": "neko",
     "description": "Do you really need an explanation of this command?",
-    "endpoint": "images/neko"
+    "endpoint": "images/neko",
+    "titleA": "Here is the neko image..."
   },
   {
     "name": "nom",
     "description": "om nom nom",
-    "endpoint": "images/nom"
+    "endpoint": "images/nom",
+    "titleA": "om nom nom"
   },
   {
     "name": "pat",
     "description": "pat pet pot pat pet pot pet pot pat pat pet pot?",
-    "endpoint": "images/pat"
+    "endpoint": "images/pat",
+    "titleA": "pat",
+    "titleB": "%AUTHOR; pats %MENTIONED; :)",
+    "options": [{
+      "name": "user",
+      "description": "The user to pat",
+      "type": 6,
+      "required": false
+    }]
   },
   {
     "name": "pout",
     "description": "Pout gifs or images",
-    "endpoint": "images/pout"
+    "endpoint": "images/pout",
+    "titleA": "Here is the pout image"
   },
   {
     "name": "slap",
     "description": "Wa-pow!",
-    "endpoint": "images/slap"
+    "endpoint": "images/slap",
+    "titleA": "Slapped!",
+    "titleB": "%AUTHOR; slaps %MENTIONED;!!",
+    "options": [{
+      "name": "user",
+      "description": "The user to slap",
+      "type": 6,
+      "required": false
+    }]
   },
   {
     "name": "smug",
     "description": "Smug gifs or images",
-    "endpoint": "images/smug"
+    "endpoint": "images/smug",
+    "titleA": "Here is the smug image"
   },
   {
     "name": "wallpaper",
     "description": "Anime wallpapers",
-    "endpoint": "images/wallpapers"
+    "endpoint": "images/wallpapers",
+    "titleA": "Here is the wallpaper"
   },
 
   {
@@ -80,18 +119,21 @@
     "name": "bondage",
     "description": "uhm........ (all characters are 18+)",
     "endpoint": "images/nsfw/bondage",
+    "titleA": "here you go i guess",
     "nsfw": true
   },
   {
     "name": "hentai",
     "description": "Hentai gifs or images (all characters are 18+)",
     "endpoint": "images/nsfw/hentai",
+    "titleA": "Here is your hentai",
     "nsfw": true
   },
   {
     "name": "thighs",
     "description": "T H I G H S (all characters are 18+)",
     "endpoint": "images/nsfw/thighs",
+    "titleA": "Here are your thighs good sir",
     "nsfw": true
   },
   {
@@ -99,10 +141,21 @@
     "description": "Report content here if you feel as if it violates Discord's TOS.",
     "endpoint": null,
     "options": [{
-        "name": "url",
-        "description": "the url of the image (right click image and hit copy link)",
-        "type": 3,
-        "required": true
-      }]
+      "name": "url",
+      "description": "the url of the image (right click image and hit copy link)",
+      "type": 3,
+      "required": true
+    }]
+  },
+  {
+    "name": "invite",
+    "description": "Get the invite link for the bot so others can add it",
+    "endpoint": null,
+    "options": [{
+      "name": "dm",
+      "description": "Send invite link in channel or DM (true: dm, false: this channel)",
+      "type": 5,
+      "required": true
+    }]
   }
 ]
