@@ -1,36 +1,30 @@
 #!/usr/bin/node
 
-const Discord = require("discord.js");
-const fetch   = require('node-fetch');
+const Discord = require("discord.js-light");
+const util    = require("./util.js");
+const types   = require("./message-type.js");
 
 const client  = new Discord.Client();
 
 //commands and their endpoints
 const commands = require("./commands.json");
 
+//generate the help command
+let re = "```\n";
 
-//https://shiro.gg/api/endpoints
+commands.forEach(c => {
+    re += "/" + c.name + " - " + c.description + "\n";
+});
 
-/**
- * Get the image or whatever
- * @param path the path as it appears relative to shiro.gg/api/ (with trailing /)
- */
-async function getThing(path) {
-    let returnUrl;
-    const req = await fetch("https://shiro.gg/api/" + path, {method: "Get"})
+re += "```";
+const helpCommand = new Discord.MessageEmbed().setDescription(re);
 
-    if(req.status !== 200) {
-        console.error("Error: " + req.status + " is the bot being rate limited?");
-    }
-
-    const res = await req.json();
-
-    if (!res.url) {
-        console.error("Error: the result URL was not defined!  res: " + res);
-    }
-
-    return res.url
-}
+//credits command
+const credits = new Discord.MessageEmbed()
+    .setDescription("I am using [shiro.gg](https://shiro.gg/api/endpoints) for all of the images, made by Xignotic, https://xignotic.dev/\n" +
+        "This bot itself was made by AlexIsOK, https://alexisok.dev/\n\n" +
+        "[You can invite the bot here](https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=0).\n\n\n" +
+        "If you find any content you deem illegal or against the TOS, please report it using the /report command.");
 
 client.on('ready',  async () => {
     console.log("Logged in as " + client.user.username);
@@ -39,77 +33,23 @@ client.on('ready',  async () => {
         console.log("posting " + commands[i].name);
 
         //the command to be sent to discord
-        const cmdtmp = {data: {name: commands[i].name, description: commands[i].description}};
+        console.log(`command ${i} is ${commands[i].name} with endpoint ${commands[i].endpoint}`);
+
+        const cmdtmp = {data: commands[i]};
 
         //post the commands
         await client.api.applications(client.user.id).commands.post(cmdtmp);
     }
+    console.log("done registering commands.");
 });
 
-/**
- * Send the image to Discord
- * @param path the path as it appears relative to shiro.gg/api/
- * @param interaction the interaction
- * @returns {Promise<void>} nothing
- */
-async function sendImage(path, interaction) {
+//guild create event to make sure that both bot and applications.commands
+//scopes are granted
+client.on("guildCreate", async (guild) => {
+    client.fetchApplication().then(app => {
 
-    const sendFile = await getThing(path);
-
-    console.log("Sending " + sendFile);
-
-    let embed = await new Discord.MessageEmbed()
-        .setImage(sendFile)
-        .setColor("RANDOM")
-        .setTitle("Here is your image (it may take a second to load)")
-
-    await client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-            type: 4, //message and display /command
-            data: {
-                embeds: [embed]
-            }
-        }
-    });
-}
-
-/**
- * Tests to see if a channel is NSFW or not.
- * @param interaction the interaction.
- * @returns {boolean} true if it is, false otherwise.
- */
-async function isChannelNSFW(interaction) {
-    let nsfw = false;
-
-    try {
-        let c = await client.channels.fetch(interaction.channel_id, true, true);
-        c = await c.fetch(true);
-
-        nsfw = c.nsfw;
-    } catch(e) {
-        console.error(e);
-        //fallback to false to avoid any nsfw in general incidents
-        //in case of errors.
-        return false;
-    }
-    return nsfw;
-}
-
-/**
- * Warn a user that the channel is NOT marked NSFW.
- * @param interaction the interaction.
- */
-function warnNotNSFW(interaction) {
-    client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-            type: 4,
-            data: {
-                content: "Sorry, but this command can only be used in channels marked NSFW.\n" +
-                    "Please enter a NSFW text channel if you want to use this command."
-            }
-        }
-    });
-}
+    })
+})
 
 /**
  * On /command used.
@@ -128,35 +68,26 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
 
     //check if the endpoint exists
     if(a.endpoint) {
-        if(a.nsfw && !await isChannelNSFW(interaction))
-            return warnNotNSFW(interaction);
+        //if the command is nsfw and the channel isn't nsfw, warn the user.
+        if(a.nsfw && !await util.isChannelNSFW(interaction, client))
+            return util.warnNotNSFW(interaction, client);
 
-        return sendImage(a.endpoint, interaction);
+        return util.sendImage(a.endpoint, interaction, client);
     }
 
     //if the command doesn't have an endpoint, check to see if it is here.
     switch(command) {
         case "ping":
-            client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: {
-                    type: 4,
-                    data: {
-                        content: "Pong!  " + client.ws.ping + " ms.\n"
-                    }
-                }
-            });
-            break;
+            return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "Pong!  " + client.ws.ping + " ms.\n"});
         case "credits":
-            client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: {
-                    type: 4,
-                    data: {
-                        content: "I am using https://shiro.gg/api/endpoints by Xignotic, https://xignotic.dev/\n" +
-                            "This bot was made by AlexIsOK, https://alexisok.dev/"
-                    }
-                }
-            });
-            break;
+            return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [credits]});
+        case "help":
+            return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [helpCommand]});
+        case "report":
+            let ch = await client.channels.fetch("795472459214225458", false, true);
+            await ch.send(`Reported content: \`${interaction.data.options[0].value}\` by user ${interaction.member.user.id}`);
+            return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "This has been reported.  It will be investigated soon.\n" +
+                    "If you have more content to report, please do so."});
     }
 });
 
@@ -165,4 +96,23 @@ console.log("Logging in");
 //authentication stuff
 const auth = require("./secrets.json");
 
-client.login(auth.token);
+client.login(auth.token).then(() => console.log("Logged in"));
+
+//start server count stuff
+
+const DBL = require("dblapi.js");
+
+if(auth.topgg) {
+    const dbl = new DBL(auth.topgg);
+
+    //log when posted
+    dbl.on("posted", () => {
+        console.log("Server count posted");
+    });
+
+    //log errors
+    dbl.on("error", (e) => {
+        console.error("Server count posting failed!")
+        console.error(require("util").inspect(e, true, null));
+    });
+}

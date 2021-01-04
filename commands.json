@@ -61,6 +61,22 @@
   },
 
   {
+    "name": "credits",
+    "description": "Get the credits for the bot and API",
+    "endpoint": null
+  },
+  {
+    "name": "help",
+    "description": "Help command for the bot.",
+    "endpoint": null
+  },
+  {
+    "name": "privacy",
+    "description": "Get privacy information for the bot.",
+    "endpoint": null
+  },
+
+  {
     "name": "bondage",
     "description": "uhm........ (all characters are 18+)",
     "endpoint": "images/nsfw/bondage",
@@ -78,10 +94,15 @@
     "endpoint": "images/nsfw/thighs",
     "nsfw": true
   },
-
   {
-    "name": "credits",
-    "description": "Get the credits for the bot and API",
-    "endpoint": null
+    "name": "report",
+    "description": "Report content here if you feel as if it violates Discord's TOS.",
+    "endpoint": null,
+    "options": [{
+        "name": "url",
+        "description": "the url of the image (right click image and hit copy link)",
+        "type": 3,
+        "required": true
+      }]
   }
 ]
