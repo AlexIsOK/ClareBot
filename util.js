@@ -19,7 +19,7 @@ async function getThing(path) {
         console.error("Error: the result URL was not defined!  res: " + res);
     }
     
-    return res.url
+    return res.url;
 }
 
 /**

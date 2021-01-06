@@ -43,7 +43,7 @@ client.on('ready',  async () => {
     console.log("Logged in as " + client.user.username);
     
     for(let i = 0; i < commands.length; i++) {
-        console.log("posting " + commands[i].name);
+        console.log(`posting ${commands[i].name}`);
         
         //the command to be sent to discord
         console.log(`command ${i} is ${commands[i].name} with endpoint ${commands[i].endpoint}`);
@@ -51,30 +51,18 @@ client.on('ready',  async () => {
         const cmdtmp = {data: commands[i]};
         
         //post the commands
-        await client.api.applications(client.user.id).commands.post(cmdtmp);
+        await client.api.applications(client.user.id).guilds("696529468247769149").commands.post(cmdtmp);
     }
     console.log("Done registering commands.");
     
-    //exec command for the test server
-    await client.api.applications(client.user.id).guilds("696529468247769149").commands.post({
-        data: {
-            name: "exec",
-            description: "Execute a command and get the output",
-            options: [{
-                name: "command",
-                description: "The command to execute with arguments",
-                type: 3,
-                required: true
-            }]
-        }
-    });
+    await client.user.setActivity("/help", {type: "WATCHING"});
 });
 
 /**
  * On /command used.
  */
 client.ws.on('INTERACTION_CREATE',  async interaction => {
-    console.log("passed " + interaction.data.name);
+    console.log("running " + interaction.data.name);
     
     //command name
     const command = interaction.data.name.toLowerCase();
@@ -111,18 +99,20 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
         case "help":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [helpCommand]});
         case "report":
-            let ch = await client.channels.fetch("795472459214225458", false, true);
-            await ch.send(`Reported content: \`${interaction.data.options[0].value}\` by user ${interaction.member.user.id}`);
+            let ch = await client.channels.fetch("785255973756862494", false, true);
+            await ch.send(`${interaction.data.options[1].value} content: \`${interaction.data.options[0].value}\` by user ${interaction.member.user.id}`);
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "This has been reported.  It will be investigated soon.\n" +
                     "If you have more content to report, please do so."});
         case "privacy":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "" +
-                    "Privacy policy for the bot:\n" +
+                    "**Privacy policy for the bot**:\n" +
                     "Only servers are cached, however users, messages, and other things are not.\n" +
                     "This is mostly done because they use a lot of resources, but also because the bot does not use them.\n" +
                     "If you use the /report command, your user ID (which is public) will be submitted to prevent abuse; however, that " +
                     "is not shared to anyone except the bot author and the API owner.\n" +
-                    "\n" +
+                    "The bot logs commands ran, but not who runs them.  For example, if you do /pat <@783414630831226920>, " +
+                    "the message `running pat` will appear on my end, but not anything that identifies you." +
+                    "\n\n" +
                     "Feel free to email me at alex@alexisok.dev if you have any questions :)"});
         case "invite":
             let dm = interaction.data.options[0].value; //boolean type
@@ -136,6 +126,7 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
                 return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "Here is the invite link for the bot:\n\n" +
                         "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=0"})
             }
+            
     }
 });
 
