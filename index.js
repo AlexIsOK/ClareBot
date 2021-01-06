@@ -125,6 +125,14 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
     }
 });
 
+client.on("guildCreate", () => {
+    console.log("Guild joined!");
+});
+
+client.on("guildDelete", () => {
+    console.log("Guild left!");
+})
+
 console.log("Logging in");
 
 //authentication stuff
@@ -135,7 +143,6 @@ client.login(auth.token).then(() => console.log("Logged in"));
 //start server count stuff
 
 const DBL = require("dblapi.js");
-const child_process = require("child_process");
 
 if(auth.topgg) {
     const dbl = new DBL(auth.topgg);
