@@ -51,7 +51,7 @@ client.on('ready',  async () => {
         const cmdtmp = {data: commands[i]};
         
         //post the commands
-        await client.api.applications(client.user.id).guilds("696529468247769149").commands.post(cmdtmp);
+        await client.api.applications(client.user.id).commands.post(cmdtmp);
     }
     console.log("Done registering commands.");
     
