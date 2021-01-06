@@ -8,6 +8,9 @@ secrets.json
 # tmp directory for storing images to send
 tmp/
 
+# debugging
+logs
+
 # this is almost as annoying as eclipse i swear
 # ignore webstorm stuffs
 .idea

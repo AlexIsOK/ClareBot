@@ -5,19 +5,14 @@ const util    = require("./util.js");
 const types   = require("./message-type.js");
 
 const client  = new Discord.Client({
-    cacheGuilds: true, //this is the only cache that is needed.
+    cacheGuilds: false,
     cacheChannels: false,
     cacheOverwrites: false,
     cacheRoles: false,
     cacheEmojis: false,
     cachePresences: false,
     fetchAllMembers: false,
-    cacheMembers: false,
-    messageCacheMaxSize: 0,
-    ws: [
-        //slash commands do not need the messages intent
-        Discord.Intents.FLAGS.GUILDS
-    ]
+    cacheMembers: false
 });
 
 //commands and their endpoints
@@ -99,7 +94,7 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
         case "help":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [helpCommand]});
         case "report":
-            let ch = await client.channels.fetch("785255973756862494", false, true);
+            let ch = await client.channels.fetch("795472459214225458", false, true);
             await ch.send(`${interaction.data.options[1].value} content: \`${interaction.data.options[0].value}\` by user ${interaction.member.user.id}`);
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "This has been reported.  It will be investigated soon.\n" +
                     "If you have more content to report, please do so."});
