@@ -98,6 +98,19 @@
     "endpoint": "images/wallpapers",
     "titleA": "Here is the wallpaper"
   },
+  {
+    "name": "poke",
+    "description": "Poke another user",
+    "endpoint": "images/poke",
+    "titleA": "Poke!",
+    "titleB": "%AUTHOR; pokes %MENTIONED;!!1",
+    "options": [{
+      "name": "user",
+      "description": "The user to poke",
+      "type": 6,
+      "required": false
+    }]
+  },
 
   {
     "name": "credits",
