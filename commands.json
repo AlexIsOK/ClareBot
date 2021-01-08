@@ -113,6 +113,20 @@
   },
 
   {
+    "name": "tickle",
+    "description": "Tickle another user",
+    "endpoint": "images/tickle",
+    "titleA": "Tickle!",
+    "titleB": "%AUTHOR; tickles %MENTIONED;!",
+    "options": [{
+      "name": "user",
+      "description": "The user to tickle",
+      "type": 6,
+      "required": false
+    }]
+  },
+  
+  {
     "name": "credits",
     "description": "Get the credits for the bot and API",
     "endpoint": null
