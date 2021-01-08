@@ -114,12 +114,12 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
             if(dm) {
                 client.users.fetch(interaction.member.user.id, false, true).then(async (u) => {
                     await u.send("Here is the invite link for the bot:\n\n" +
-                        "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=0");
+                        "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=1024");
                 });
                 return await util.sendGenericMessage(interaction, client, types.ACKNOWLEDGE_WITH_SOURCE, {});
             } else {
                 return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "Here is the invite link for the bot:\n\n" +
-                        "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=0"})
+                        "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=1024"})
             }
             
     }
