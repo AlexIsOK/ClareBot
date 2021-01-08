@@ -90,7 +90,7 @@ async function warnNotNSFW(interaction, client) {
             data: {
                 content: "Sorry, but this command can only be used in channels marked NSFW.\n" +
                     "Please enter a NSFW text channel if you want to use this command.\n\n" +
-                    "If you just recently changed the channel to NSFW, please wait a minute."
+                    "If the channel is NSFW, make sure the role for this bot can view this channel."
             }
         }
     });
