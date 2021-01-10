@@ -9,7 +9,7 @@ secrets.json
 tmp/
 
 # debugging
-logs
+logs/
 
 # this is almost as annoying as eclipse i swear
 # ignore webstorm stuffs

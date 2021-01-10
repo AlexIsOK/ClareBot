@@ -5,7 +5,7 @@ const util    = require("./util.js");
 const types   = require("./message-type.js");
 
 const client  = new Discord.Client({
-    cacheGuilds: false,
+    cacheGuilds: true,
     cacheChannels: false,
     cacheOverwrites: false,
     cacheRoles: false,
@@ -19,13 +19,19 @@ const client  = new Discord.Client({
 const commands = require("./commands.json");
 
 //generate the help command
-let re = "```\n";
+let meta  = "Meta:\n";
+let image = "Images:\n";
+let nsfw  = "NSFW:\n";
 commands.forEach(c => {
-    re += "/" + c.name + " - " + c.description + "\n";
+    if(c.category === "meta")
+        meta += `  /${c.name} - ${c.description}\n`;
+    if(c.category === "nsfw")
+        nsfw += `  /${c.name} - ${c.description}\n`;
+    if(c.category === "images")
+        image += `  /${c.name} - ${c.description}\n`;
 });
-re += "```";
 
-const helpCommand = new Discord.MessageEmbed().setDescription(re);
+const helpCommand = new Discord.MessageEmbed().setDescription(`\`\`\`\n${meta}\n${image}\n${nsfw}\n\`\`\``);
 
 //credits command
 const credits = new Discord.MessageEmbed()
@@ -51,6 +57,15 @@ client.on('ready',  async () => {
     console.log("Done registering commands.");
     
     await client.user.setActivity("/help", {type: "WATCHING"});
+    
+    //owner commands
+    await client.api.applications(client.user.id).guilds("696529468247769149").commands.post({
+        data: {
+            "name": "restart",
+            "description": "Restart the bot (owner only)",
+            "endpoint": null
+        }
+    });
 });
 
 /**
@@ -65,8 +80,14 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
     //get the command from the commands object
     const a = commands.filter(cm => cm.name === command)[0];
     
-    //make sure the command exists in case one was deleted.
-    if(!a) return;
+    //check for restart command here because js stinky
+    if(command === "restart") {
+        console.log(`${interaction.member.user.id} did restart`);
+        if(interaction.member.user.id === "541763812676861952") {
+            await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "Restarting..."});
+            return process.exit(0);
+        } else return null;
+    }
     
     //check if the endpoint exists
     if(a.endpoint) {
@@ -89,8 +110,10 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
     switch(command) {
         case "ping":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "Pong!  " + client.ws.ping + " ms.\n"});
+            
         case "credits":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [credits]});
+            
         case "help":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {embeds: [helpCommand]});
         case "report":
@@ -98,6 +121,7 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
             await ch.send(`${interaction.data.options[1].value} content: \`${interaction.data.options[0].value}\` by user ${interaction.member.user.id}`);
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "This has been reported.  It will be investigated soon.\n" +
                     "If you have more content to report, please do so."});
+            
         case "privacy":
             return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE, {content: "" +
                     "**Privacy policy for the bot**:\n" +
@@ -109,6 +133,7 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
                     "the message `running pat` will appear on my end, but not anything that identifies you." +
                     "\n\n" +
                     "Feel free to email me at alex@alexisok.dev if you have any questions :)"});
+            
         case "invite":
             let dm = interaction.data.options[0].value; //boolean type
             if(dm) {
@@ -122,6 +147,12 @@ client.ws.on('INTERACTION_CREATE',  async interaction => {
                         "https://discord.com/oauth2/authorize?client_id=783414630831226920&scope=bot+applications.commands&permissions=1024"})
             }
             
+        case "stats":
+            return await util.sendGenericMessage(interaction, client, types.CHANNEL_MESSAGE_WITH_SOURCE,
+                {
+                     content:
+                     `RAM usage: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB\nUptime: ${(process.uptime() / 60 / 60 / 24).toFixed(2)} days\nServers: ${client.guilds.cache.size}\nPing: ${client.ws.ping}`
+                });
     }
 });
 

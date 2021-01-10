@@ -2,19 +2,22 @@
   {
     "name": "ping",
     "description": "annoys the bot",
-    "endpoint": null
+    "endpoint": null,
+    "category": "meta"
   },
   {
     "name": "avatar",
     "description": "Get a cute anime avatar",
     "endpoint": "images/avatars",
-    "titleA": "Here is your avatar"
+    "titleA": "Here is your avatar",
+    "category": "images"
   },
   {
     "name": "blush",
     "description": "Blush gifs or images",
     "endpoint": "images/blush",
-    "titleA": "Here is the blush image"
+    "titleA": "Here is the blush image",
+    "category": "images"
   },
   {
     "name": "hug",
@@ -27,7 +30,8 @@
       "description": "The user to hug",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
   {
     "name": "kiss",
@@ -40,19 +44,22 @@
       "description": "The user to kiss",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
   {
     "name": "neko",
     "description": "Do you really need an explanation of this command?",
     "endpoint": "images/neko",
-    "titleA": "Here is the neko image..."
+    "titleA": "Here is the neko image...",
+    "category": "images"
   },
   {
     "name": "nom",
     "description": "om nom nom",
     "endpoint": "images/nom",
-    "titleA": "om nom nom"
+    "titleA": "om nom nom",
+    "category": "images"
   },
   {
     "name": "pat",
@@ -65,13 +72,15 @@
       "description": "The user to pat",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
   {
     "name": "pout",
     "description": "Pout gifs or images",
     "endpoint": "images/pout",
-    "titleA": "Here is the pout image"
+    "titleA": "Here is the pout image",
+    "category": "images"
   },
   {
     "name": "slap",
@@ -84,19 +93,22 @@
       "description": "The user to slap",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
   {
     "name": "smug",
     "description": "Smug gifs or images",
     "endpoint": "images/smug",
-    "titleA": "Here is the smug image"
+    "titleA": "Here is the smug image",
+    "category": "images"
   },
   {
     "name": "wallpaper",
     "description": "Anime wallpapers",
     "endpoint": "images/wallpapers",
-    "titleA": "Here is the wallpaper"
+    "titleA": "Here is the wallpaper",
+    "category": "images"
   },
   {
     "name": "poke",
@@ -109,7 +121,8 @@
       "description": "The user to poke",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
 
   {
@@ -123,49 +136,62 @@
       "description": "The user to tickle",
       "type": 6,
       "required": false
-    }]
+    }],
+    "category": "images"
   },
   
   {
     "name": "credits",
     "description": "Get the credits for the bot and API",
-    "endpoint": null
+    "endpoint": null,
+    "category": "meta"
   },
   {
     "name": "help",
     "description": "Help command for the bot.",
-    "endpoint": null
+    "endpoint": null,
+    "category": "meta"
   },
   {
     "name": "privacy",
     "description": "Get privacy information for the bot.",
-    "endpoint": null
+    "endpoint": null,
+    "category": "meta"
+  },
+  {
+    "name": "stats",
+    "description": "Get statistics about the bot.",
+    "endpoint": null,
+    "category": "meta"
   },
 
   {
     "name": "bondage",
-    "description": "uhm........ (all characters are 18+)",
+    "description": "uhm........ (characters are 18+)",
     "endpoint": "images/nsfw/bondage",
     "titleA": "here you go i guess",
-    "nsfw": true
+    "nsfw": true,
+    "category": "nsfw"
   },
   {
     "name": "hentai",
-    "description": "Hentai gifs or images (all characters are 18+)",
+    "description": "Hentai gifs or images (characters are 18+)",
     "endpoint": "images/nsfw/hentai",
     "titleA": "Here is your hentai",
-    "nsfw": true
+    "nsfw": true,
+    "category": "nsfw"
   },
   {
     "name": "thighs",
-    "description": "T H I G H S (all characters are 18+)",
+    "description": "T H I G H S (characters are 18+)",
     "endpoint": "images/nsfw/thighs",
     "titleA": "Here are your thighs good sir",
-    "nsfw": true
+    "nsfw": true,
+    "category": "nsfw"
   },
   {
     "name": "report",
-    "description": "Report content here if you feel as if it violates Discord's TOS or is low-quality",
+    "description": "Report a low-quality or questionable image.",
     "endpoint": null,
     "options": [{
       "name": "url",
@@ -192,17 +218,19 @@
           "value": "broken"
         }
       ]
-    }]
+    }],
+    "category": "meta"
   },
   {
     "name": "invite",
-    "description": "Get the invite link for the bot so others can add it",
+    "description": "Get the invite link for the bot",
     "endpoint": null,
     "options": [{
       "name": "dm",
       "description": "Send invite link in channel or DM (true: dm, false: this channel)",
       "type": 5,
       "required": true
-    }]
+    }],
+    "category": "meta"
   }
 ]
