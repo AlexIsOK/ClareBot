@@ -20,6 +20,13 @@
     "category": "images"
   },
   {
+    "name": "cry",
+    "description": "Crying gifs or images",
+    "endpoint": "images/cry",
+    "titleA": ":(",
+    "category": "images"
+  },
+  {
     "name": "hug",
     "description": "Hug gifs or images",
     "endpoint": "images/hug",
