@@ -1,8 +1,9 @@
 #!/usr/bin/node
 
-const Discord = require("discord.js-light");
-const util    = require("./util.js");
-const types   = require("./message-type.js");
+const Discord    = require("discord.js-light");
+const util       = require("./util.js");
+const types      = require("./message-type.js");
+const AutoPoster = require('topgg-autoposter')
 
 const client  = new Discord.Client({
     cacheGuilds: true,
@@ -15,6 +16,13 @@ const client  = new Discord.Client({
     cacheMembers: false
 });
 
+
+const ap = AutoPoster('Your Top.gg Token', client)
+
+ap.on('posted', () => {
+    console.log('Posted stats to Top.gg!')
+})
+
 //commands and their endpoints
 const commands = require("./commands.json");
 
@@ -22,6 +30,7 @@ const commands = require("./commands.json");
 let meta  = "Meta:\n";
 let image = "Images:\n";
 let nsfw  = "NSFW:\n";
+
 commands.forEach(c => {
     if(c.category === "meta")
         meta += `  /${c.name} - ${c.description}\n`;
